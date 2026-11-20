@@ -1,5 +1,6 @@
 
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 
 from encoding.base64_encoder import encode_base64, decode_base64
 from encoding.xor_encoder import xor_encode, xor_decode
@@ -35,6 +36,15 @@ from reporting.report_generator import (
 )
 
 app = Flask(__name__)
+
+CORS(
+    app,
+    resources={
+        r"/api/*": {
+            "origins": r"https://.*\.vercel\.app"
+        }
+    }
+)
 
 
 @app.route("/")
