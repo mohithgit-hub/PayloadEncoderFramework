@@ -1,13 +1,13 @@
 
+const API_BASE_URL = "https://payloadencoderframework.onrender.com";
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const navigationButtons = document.querySelectorAll(".nav-btn");
     const contentSections = document.querySelectorAll(".content-section");
 
     navigationButtons.forEach(function (button) {
-
         button.addEventListener("click", function () {
-
             const targetSection = button.dataset.section;
 
             navigationButtons.forEach(function (navButton) {
@@ -25,11 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (selectedSection) {
                 selectedSection.classList.add("active");
             }
-
         });
-
     });
-
 
     const encodingMethod = document.getElementById("encoding-method");
     const xorKeyGroup = document.getElementById("xor-key-group");
@@ -39,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const encodeButton = document.getElementById("encode-btn");
     const decodeButton = document.getElementById("decode-btn");
 
-
     function updateXorKeyVisibility() {
         xorKeyGroup.hidden = encodingMethod.value !== "xor";
     }
@@ -47,9 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
     encodingMethod.addEventListener("change", updateXorKeyVisibility);
     updateXorKeyVisibility();
 
-
     async function processEncoding(operation) {
-
         const payload = encodingPayload.value;
         const method = encodingMethod.value;
         const key = xorKey.value;
@@ -72,8 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         encodingOutput.value = "Processing...";
 
         try {
-
-            const response = await fetch("/api/encoding", {
+            const response = await fetch(`${API_BASE_URL}/api/encoding`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -97,9 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             encodingOutput.value = "Error: " + error.message;
         }
-
     }
-
 
     encodeButton.addEventListener("click", function () {
         processEncoding("encode");
@@ -109,16 +100,13 @@ document.addEventListener("DOMContentLoaded", function () {
         processEncoding("decode");
     });
 
-
     const obfuscationPayload = document.getElementById("obfuscation-payload");
     const obfuscationOutput = document.getElementById("obfuscation-output");
     const obfuscationMethod = document.getElementById("obfuscation-method");
     const obfuscateButton = document.getElementById("obfuscate-btn");
     const reverseButton = document.getElementById("reverse-btn");
 
-
     async function processObfuscation(operation) {
-
         const payload = obfuscationPayload.value;
         const method = obfuscationMethod.value;
 
@@ -135,8 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
         obfuscationOutput.value = "Processing...";
 
         try {
-
-            const response = await fetch("/api/obfuscation", {
+            const response = await fetch(`${API_BASE_URL}/api/obfuscation`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -159,9 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             obfuscationOutput.value = "Error: " + error.message;
         }
-
     }
-
 
     obfuscateButton.addEventListener("click", function () {
         processObfuscation("obfuscate");
@@ -171,16 +156,13 @@ document.addEventListener("DOMContentLoaded", function () {
         processObfuscation("reverse");
     });
 
-
     const detectionPayload = document.getElementById("detection-payload");
     const detectButton = document.getElementById("detect-btn");
     const detectionStatus = document.getElementById("detection-status");
     const matchedSignature = document.getElementById("matched-signature");
     const detectionOutcome = document.getElementById("detection-outcome");
 
-
     async function processDetection() {
-
         const payload = detectionPayload.value;
 
         if (payload.trim() === "") {
@@ -197,8 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
         detectButton.disabled = true;
 
         try {
-
-            const response = await fetch("/api/detection", {
+            const response = await fetch(`${API_BASE_URL}/api/detection`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -222,7 +203,6 @@ document.addEventListener("DOMContentLoaded", function () {
             detectionOutcome.textContent = data.message;
 
         } catch (error) {
-
             detectionStatus.textContent = "ERROR";
             matchedSignature.textContent = "Unavailable";
             detectionOutcome.textContent = error.message;
@@ -230,12 +210,9 @@ document.addEventListener("DOMContentLoaded", function () {
         } finally {
             detectButton.disabled = false;
         }
-
     }
 
-
     detectButton.addEventListener("click", processDetection);
-
 
     const comparisonPanel = document.createElement("div");
 
@@ -274,9 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const compareButton = document.getElementById("compare-btn");
     const comparisonResults = document.getElementById("comparison-results");
 
-
     async function comparePayloads() {
-
         const payload = detectionPayload.value;
         const method = comparisonMethod.value;
 
@@ -289,8 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
         comparisonResults.textContent = "Comparing payloads...";
 
         try {
-
-            const response = await fetch("/api/detection/compare", {
+            const response = await fetch(`${API_BASE_URL}/api/detection/compare`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -353,18 +327,14 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
         } catch (error) {
-
             comparisonResults.textContent = "Error: " + error.message;
 
         } finally {
             compareButton.disabled = false;
         }
-
     }
 
-
     compareButton.addEventListener("click", comparePayloads);
-
 
     const generateReportButton = document.getElementById("generate-report-btn");
     const totalTests = document.getElementById("total-tests");
@@ -373,15 +343,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const reportTableBody = document.getElementById("report-table-body");
     const reportAnalysis = document.getElementById("report-analysis");
 
-
     async function generateReport() {
-
         generateReportButton.disabled = true;
         generateReportButton.textContent = "Generating...";
 
         try {
-
-            const response = await fetch("/api/report");
+            const response = await fetch(`${API_BASE_URL}/api/report`);
             const data = await response.json();
 
             if (!response.ok) {
@@ -397,7 +364,6 @@ document.addEventListener("DOMContentLoaded", function () {
             reportTableBody.replaceChildren();
 
             if (report.records.length === 0) {
-
                 const row = document.createElement("tr");
                 const cell = document.createElement("td");
 
@@ -408,9 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 reportTableBody.appendChild(row);
 
             } else {
-
                 report.records.forEach(function (record) {
-
                     const row = document.createElement("tr");
 
                     const values = [
@@ -427,17 +391,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     ];
 
                     values.forEach(function (value) {
-
                         const cell = document.createElement("td");
                         cell.textContent = value;
                         row.appendChild(cell);
-
                     });
 
                     reportTableBody.appendChild(row);
-
                 });
-
             }
 
             reportAnalysis.replaceChildren();
@@ -449,29 +409,21 @@ document.addEventListener("DOMContentLoaded", function () {
             reportAnalysis.appendChild(rate);
 
             report.insights.forEach(function (insight) {
-
                 const paragraph = document.createElement("p");
                 paragraph.textContent = insight;
                 reportAnalysis.appendChild(paragraph);
-
             });
 
         } catch (error) {
-
             reportAnalysis.textContent = "Error: " + error.message;
 
         } finally {
-
             generateReportButton.disabled = false;
             generateReportButton.textContent = "Generate Report";
-
         }
-
     }
 
-
     generateReportButton.addEventListener("click", generateReport);
-
 
     const clearRecordsButton = document.createElement("button");
     clearRecordsButton.type = "button";
@@ -482,9 +434,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     generateReportButton.insertAdjacentElement("afterend", clearRecordsButton);
 
-
     async function clearRecords() {
-
         const confirmed = window.confirm(
             "Are you sure you want to clear all recorded outputs and comparison results? This action cannot be undone."
         );
@@ -497,8 +447,7 @@ document.addEventListener("DOMContentLoaded", function () {
         clearRecordsButton.textContent = "Clearing...";
 
         try {
-
-            const response = await fetch("/api/report/clear", {
+            const response = await fetch(`${API_BASE_URL}/api/report/clear`, {
                 method: "POST"
             });
 
@@ -515,18 +464,13 @@ document.addEventListener("DOMContentLoaded", function () {
             reportAnalysis.prepend(message);
 
         } catch (error) {
-
             reportAnalysis.textContent = "Error: " + error.message;
 
         } finally {
-
             clearRecordsButton.disabled = false;
             clearRecordsButton.textContent = "Clear Records";
-
         }
-
     }
-
 
     clearRecordsButton.addEventListener("click", clearRecords);
 
