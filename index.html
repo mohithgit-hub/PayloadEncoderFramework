@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payload Encoder & Obfuscation Framework</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">P</span>
+                <div>
+                    <h1>Payload Encoder</h1>
+                    <p>Custom Payload Encoder & Obfuscation Framework</p>
+                </div>
+            </div>
+
+            <div class="header-status">
+                <span class="status-dot"></span>
+                Laboratory Environment
+            </div>
+        </header>
+
+        <nav class="navigation">
+
+            <button class="nav-btn active" data-section="encoding">
+                Encoding
+            </button>
+
+            <button class="nav-btn" data-section="obfuscation">
+                String Obfuscation
+            </button>
+
+            <button class="nav-btn" data-section="detection">
+                Evasion Testing
+            </button>
+
+            <button class="nav-btn" data-section="reporting">
+                Reporting
+            </button>
+
+        </nav>
+
+        <main class="main-content">
+
+            <section id="encoding" class="content-section active">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-label">MODULE 01</span>
+                        <h2>Encoding Module</h2>
+                        <p>Encode and decode text payloads using different encoding techniques.</p>
+                    </div>
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <h3>Payload Input</h3>
+                        <span class="panel-tag">TEXT INPUT</span>
+                    </div>
+
+                    <textarea
+                        id="encoding-payload"
+                        placeholder="Enter your text payload here..."
+                    ></textarea>
+
+                    <div class="form-group">
+                        <label for="encoding-method">Encoding Technique</label>
+
+                        <select id="encoding-method">
+                            <option value="base64">Base64</option>
+                            <option value="xor">XOR</option>
+                            <option value="rot13">ROT13</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="xor-key-group" hidden>
+                        <label for="xor-key">XOR Key</label>
+                        <input
+                            type="text"
+                            id="xor-key"
+                            placeholder="Enter user-defined key"
+                        >
+                    </div>
+
+                    <div class="button-group">
+                        <button class="primary-btn" id="encode-btn">
+                            Encode
+                        </button>
+
+                        <button class="secondary-btn" id="decode-btn">
+                            Decode
+                        </button>
+                    </div>
+
+                    <div class="result-area">
+                        <div class="result-heading">
+                            <h3>Output</h3>
+                        </div>
+
+                        <textarea
+                            id="encoding-output"
+                            readonly
+                            placeholder="Encoded or decoded output will appear here..."
+                        ></textarea>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section id="obfuscation" class="content-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-label">MODULE 02</span>
+                        <h2>String Obfuscation</h2>
+                        <p>Apply string transformation and obfuscation techniques to text payloads.</p>
+                    </div>
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <h3>Payload Input</h3>
+                        <span class="panel-tag">TEXT INPUT</span>
+                    </div>
+
+                    <textarea
+                        id="obfuscation-payload"
+                        placeholder="Enter your text payload here..."
+                    ></textarea>
+
+                    <div class="form-group">
+                        <label for="obfuscation-method">Obfuscation Technique</label>
+
+                        <select id="obfuscation-method">
+                            <option value="random">Random Character Insertion</option>
+                            <option value="splitting">Character Splitting & Concatenation</option>
+                            <option value="reversible">Reversible Transformation</option>
+                            <option value="escape">Escape-Sequence Obfuscation</option>
+                        </select>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="primary-btn" id="obfuscate-btn">
+                            Apply Obfuscation
+                        </button>
+
+                        <button class="secondary-btn" id="reverse-btn">
+                            Reverse Transformation
+                        </button>
+                    </div>
+
+                    <div class="result-area">
+                        <div class="result-heading">
+                            <h3>Obfuscation Output</h3>
+                        </div>
+
+                        <textarea
+                            id="obfuscation-output"
+                            readonly
+                            placeholder="Obfuscated output will appear here..."
+                        ></textarea>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section id="detection" class="content-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-label">MODULE 03</span>
+                        <h2>Evasion Testing</h2>
+                        <p>Test text payloads against simulated signature-based detection.</p>
+                    </div>
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <h3>Detection Input</h3>
+                        <span class="panel-tag">SIGNATURE ANALYSIS</span>
+                    </div>
+
+                    <textarea
+                        id="detection-payload"
+                        placeholder="Enter the original or transformed text payload..."
+                    ></textarea>
+
+                    <div class="button-group">
+                        <button class="primary-btn" id="detect-btn">
+                            Run Detection Test
+                        </button>
+                    </div>
+
+                    <div class="detection-result">
+
+                        <h3>Detection Results</h3>
+
+                        <div class="result-grid">
+
+                            <div class="result-card">
+                                <span>Detection Status</span>
+                                <strong id="detection-status">Not Tested</strong>
+                            </div>
+
+                            <div class="result-card">
+                                <span>Matched Signature</span>
+                                <strong id="matched-signature">-</strong>
+                            </div>
+
+                            <div class="result-card">
+                                <span>Detection Result</span>
+                                <strong id="detection-outcome">-</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section id="reporting" class="content-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-label">MODULE 04</span>
+                        <h2>Reporting Engine</h2>
+                        <p>View and compare payload transformation and detection test results.</p>
+                    </div>
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <h3>Test Report</h3>
+                        <span class="panel-tag">ANALYSIS</span>
+                    </div>
+
+                    <div class="report-summary">
+
+                        <div class="result-card">
+                            <span>Total Tests</span>
+                            <strong id="total-tests">0</strong>
+                        </div>
+
+                        <div class="result-card">
+                            <span>Detected</span>
+                            <strong id="total-detected">0</strong>
+                        </div>
+
+                        <div class="result-card">
+                            <span>Not Detected</span>
+                            <strong id="total-undetected">0</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="table-container">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Technique</th>
+                                    <th>Original Payload</th>
+                                    <th>Transformed Payload</th>
+                                    <th>Original Detection</th>
+                                    <th>Transformed Detection</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="report-table-body">
+                                <tr>
+                                    <td colspan="6">No test results available.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="report-observations">
+                        <h3>Comparative Analysis</h3>
+
+                        <div id="report-analysis">
+                            <p>Complete encoding, obfuscation and detection tests to view comparative analysis.</p>
+                        </div>
+                    </div>
+
+                    <button class="primary-btn" id="generate-report-btn">
+                        Generate Report
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            <p>Custom Payload Encoder & Obfuscation Framework</p>
+            <p>Python-Based Cybersecurity Project</p>
+        </footer>
+
+    </div>
+
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>
